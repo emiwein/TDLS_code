@@ -109,10 +109,10 @@ for i in range(len(temperatures)):
         dummy = np.sum(A)
         signal=np.append(signal,dummy)
 
-butthole = [times,temperatures,pressures,signal]
-butthole = np.transpose(butthole)
-buttholefinal = pd.DataFrame(data=butthole)
-buttholefinal.to_csv('/Users/emilywein/Desktop/bk2/until2fmd',index=False)
+g = [times,temperatures,pressures,signal]
+g = np.transpose(g)
+gfinal = pd.DataFrame(data=g)
+gfinal.to_csv('/Users/emilywein/Desktop/bk2/until2fmd',index=False)
 
 scansfinal = pd.DataFrame(data=scans)
 scansfinal.to_csv('/Users/emilywein/Desktop/bk2/until2fscans',index=False)
