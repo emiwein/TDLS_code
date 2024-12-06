@@ -90,32 +90,44 @@ scans = np.delete(scans, 0, 0)
 
 signal=[]
 for i in range(len(temperatures)):
-
-        idv = scan[i,:]
-        subset1 = idv[20:50]
-        combined=subset1
-        subset2 = idv[380:400]
-        combined=np.append(subset1,subset2)
-
-        subset1 = step[20:50]
-        subset2 = step[380:400]
-        combinedpoints=np.append(subset1,subset2)
-
-        slope, intercept, r_value, p_value, std_err = stats.linregress(combinedpoints,combined)
-        y=step*slope+intercept
-
         
-        A = np.log(y[25:410]/idv[25:410])
-        dummy = np.sum(A)
-        signal=np.append(signal,dummy)
+	idv = scans[i,:]
+	subset3 = np.average(np.append(idv[0:8],idv[435:]))
+	idv = idv-subset3
+	background = np.append(subset3,background)
+	subset1 = idv[20:70]
+	lowerpower = np.append(np.average(subset1),lowerpower)
+	combined=subset1
+	subset2 = idv[370:420]
+	upperpower = np.append(np.average(subset2),upperpower)
+	
+	combined=np.append(subset1,subset2)
+	
+	subset1 = step[20:70]
+	subset2 = step[370:420]
+	combinedpoints=np.append(subset1,subset2)
+	
+	slope, intercept, r_value, p_value, std_err = sci.stats.linregress(combinedpoints,combined)
+	y=step*slope+intercept
+	
+	step =[]
+	for i in range(442):
+	    dummy = 0.00052+i*5.00*10**(-7)
+	    step = np.append(step,dummy)   
+	    
+	A = np.log(y[25:410]/idv[25:410])
+	peakB = np.amax(A)
+	peakA = np.append(peakB,peakA)
+	dummy = np.sum(A*step[25:410])
+	signal = np.append(signal,dummy)
 
 g = [times,temperatures,pressures,signal]
 g = np.transpose(g)
 gfinal = pd.DataFrame(data=g)
-gfinal.to_csv('/Users/emilywein/Desktop/bk2/until2fmd',index=False)
+gfinal.to_csv('',index=False)
 
 scansfinal = pd.DataFrame(data=scans)
-scansfinal.to_csv('/Users/emilywein/Desktop/bk2/until2fscans',index=False)
+scansfinal.to_csv('',index=False)
 
 end = timer()
 logging.info(f"Total time: {end-start}")
