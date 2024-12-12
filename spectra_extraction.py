@@ -92,13 +92,13 @@ signal=[]
 for i in range(len(temperatures)):
         
 	idv = scans[i,:]
-	subset3 = np.average(np.append(idv[0:8],idv[435:]))
+	subset3 = np.average(np.append(idv[0:9],idv[435:]))
 	idv = idv-subset3
 	background = np.append(subset3,background)
-	subset1 = idv[20:70]
+	subset1 = idv[20:50]
 	lowerpower = np.append(np.average(subset1),lowerpower)
 	combined=subset1
-	subset2 = idv[370:420]
+	subset2 = idv[380:400]
 	upperpower = np.append(np.average(subset2),upperpower)
 	
 	combined=np.append(subset1,subset2)
