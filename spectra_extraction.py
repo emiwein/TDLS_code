@@ -92,7 +92,7 @@ signal=[]
 for i in range(len(temperatures)):
         
 	idv = scans[i,:]
-	subset3 = np.average(np.append(idv[0:9],idv[435:]))
+	subset3 = np.average(np.append(idv[0:10],idv[435:]))
 	idv = idv-subset3
 	background = np.append(subset3,background)
 	subset1 = idv[20:50]
